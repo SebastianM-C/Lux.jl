@@ -150,8 +150,8 @@ function transform(l::Flux.ConvTranspose; preserve_ps_st::Bool=false, kwargs...)
     if preserve_ps_st
         _bias = l.bias isa Bool ? nothing :
                 reshape(copy(l.bias), ntuple(_ -> 1, length(k))..., out_chs, 1)
-        return ConvTranspose(k, in_chs * groups => out_chs, l.σ; l.stride, pad,
-            l.dilation, groups, use_bias=!(l.bias isa Bool),
+        return ConvTranspose(k, in_chs * groups => out_chs, l.σ; l.stride,
+            pad, l.dilation, groups, use_bias=!(l.bias isa Bool),
             init_weight=__copy_anonymous_closure(Lux._maybe_flip_conv_weight(l.weight)),
             init_bias=__copy_anonymous_closure(_bias))
     else
