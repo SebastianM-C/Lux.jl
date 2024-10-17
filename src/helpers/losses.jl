@@ -90,10 +90,10 @@ get_ϵ(::Type{T}, ϵ::Real) where {T} = T(ϵ)
 get_ϵ(::Type{T}, ::Nothing) where {T} = eps(float(T))
 
 get_loss_dims(::AbstractVector) = Colon()
-get_loss_dims(::AbstractArray{T, N}) where {T, N} = 1:(N - 1)
+get_loss_dims(::AbstractArray{T, N}) where {T, N} = 1:(N-1)
 
 # Functional forms of losses
-function siamese_contrastive_loss(x::T1, y::T2, margin=true) where {T1, T2}
+function siamese_contrastive_loss(x::T1, y::T2; margin=true) where {T1, T2}
     return (1 - y) * x^2 + y * max(promote_type(T1, T2)(0), margin - x)^2
 end
 

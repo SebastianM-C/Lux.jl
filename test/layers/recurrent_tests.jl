@@ -1,5 +1,5 @@
 @testitem "RNNCell" setup=[SharedTestSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset for rnncell in (RNNCell(3 => 5, identity), RNNCell(3 => 5, tanh),
@@ -31,8 +31,8 @@
         end
 
         @testset "Trainable hidden states" begin
-            @testset for rnncell in (
-                RNNCell(3 => 5, identity; use_bias=false, train_state=true),
+            @testset for rnncell in
+                         (RNNCell(3 => 5, identity; use_bias=false, train_state=true),
                 RNNCell(3 => 5, identity; use_bias=true, train_state=true))
                 rnn_no_trainable_state = RNNCell(
                     3 => 5, identity; use_bias=false, train_state=false)
@@ -49,8 +49,8 @@
                     (y, carry), _ = Lux.apply(rnncell, x, ps, st)
                     @test carry == _carry
 
-                    l, back = Zygote.pullback(
-                        p -> sum(abs2, 0 .- rnncell(x, p, st)[1][1]), ps)
+                    l,
+                    back = Zygote.pullback(p -> sum(abs2, 0 .- rnncell(x, p, st)[1][1]), ps)
                     gs = back(one(l))[1]
                     @test !isnothing(gs.hidden_state)
                 end
@@ -60,7 +60,7 @@
 end
 
 @testitem "LSTMCell" setup=[SharedTestSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset for lstmcell in (LSTMCell(3 => 5), LSTMCell(3 => 5; use_bias=true),
@@ -105,8 +105,8 @@ end
                 ps = _ps
                 (y, carry), _ = Lux.apply(lstm, x, ps, st)
                 @test carry == _carry
-                l, back = Zygote.pullback(
-                    p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
+                l,
+                back = Zygote.pullback(p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
                 gs = back(one(l))[1]
                 @test_throws ErrorException gs.bias_ih
                 @test_throws ErrorException gs.bias_hh
@@ -119,8 +119,8 @@ end
                 ps = merge(_ps, (hidden_state=ps.hidden_state,))
                 (y, carry), _ = Lux.apply(lstm, x, ps, st)
                 @test carry == _carry
-                l, back = Zygote.pullback(
-                    p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
+                l,
+                back = Zygote.pullback(p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
                 gs = back(one(l))[1]
                 @test_throws ErrorException gs.bias_ih
                 @test_throws ErrorException gs.bias_hh
@@ -133,8 +133,8 @@ end
                 ps = merge(_ps, (memory=ps.memory,))
                 (y, carry), _ = Lux.apply(lstm, x, ps, st)
                 @test carry == _carry
-                l, back = Zygote.pullback(
-                    p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
+                l,
+                back = Zygote.pullback(p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
                 gs = back(one(l))[1]
                 @test_throws ErrorException gs.bias_ih
                 @test_throws ErrorException gs.bias_hh
@@ -146,8 +146,8 @@ end
                 ps = merge(_ps, (hidden_state=ps.hidden_state, memory=ps.memory))
                 (y, carry), _ = Lux.apply(lstm, x, ps, st)
                 @test carry == _carry
-                l, back = Zygote.pullback(
-                    p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
+                l,
+                back = Zygote.pullback(p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
                 gs = back(one(l))[1]
                 @test_throws ErrorException gs.bias_ih
                 @test_throws ErrorException gs.bias_hh
@@ -158,8 +158,8 @@ end
                 ps, st = Lux.setup(rng, lstm) |> dev
                 ps = merge(_ps, (; ps.bias_ih, ps.bias_hh, ps.hidden_state, ps.memory))
                 (y, carry), _ = Lux.apply(lstm, x, ps, st)
-                l, back = Zygote.pullback(
-                    p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
+                l,
+                back = Zygote.pullback(p -> sum(abs2, 0 .- sum(lstm(x, p, st)[1][1])), ps)
                 gs = back(one(l))[1]
                 @test !isnothing(gs.bias_ih)
                 @test !isnothing(gs.bias_hh)
@@ -171,7 +171,7 @@ end
 end
 
 @testitem "GRUCell" setup=[SharedTestSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset for grucell in (GRUCell(3 => 5), GRUCell(3 => 5; use_bias=true),
@@ -242,11 +242,10 @@ end
 end
 
 @testitem "StatefulRecurrentCell" setup=[SharedTestSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
-        for _cell in (RNNCell, LSTMCell, GRUCell),
-            use_bias in (true, false),
+        for _cell in (RNNCell, LSTMCell, GRUCell), use_bias in (true, false),
             train_state in (true, false)
 
             cell = _cell(3 => 5; use_bias, train_state)
@@ -289,13 +288,13 @@ end
 end
 
 @testitem "Recurrence" setup=[SharedTestSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "ordering: $ordering" for ordering in (BatchLastIndex(), TimeLastIndex())
             @testset "cell: $_cell" for _cell in (RNNCell, LSTMCell, GRUCell)
-                @testset "use_bias: $use_bias, train_state: $train_state" for use_bias in (
-                        true, false),
+                @testset "use_bias: $use_bias, train_state: $train_state" for use_bias in
+                                                                              (true, false),
                     train_state in (true, false)
 
                     cell = _cell(3 => 5; use_bias, train_state)
@@ -388,7 +387,7 @@ end
 end
 
 @testitem "Bidirectional" setup=[SharedTestSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "cell: $_cell" for _cell in (RNNCell, LSTMCell, GRUCell)
@@ -425,8 +424,8 @@ end
             test_gradients(__f, ps; atol=1e-3, rtol=1e-3,
                 broken_backends=Sys.isapple() ? [AutoEnzyme()] : [])
 
-            @testset "backward_cell: $_backward_cell" for _backward_cell in (
-                RNNCell, LSTMCell, GRUCell)
+            @testset "backward_cell: $_backward_cell" for _backward_cell in
+                                                          (RNNCell, LSTMCell, GRUCell)
                 cell = _cell(3 => 5)
                 backward_cell = _backward_cell(3 => 5)
                 bi_rnn = BidirectionalRNN(cell, backward_cell)

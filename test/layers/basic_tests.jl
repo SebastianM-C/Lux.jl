@@ -1,5 +1,5 @@
 @testitem "Miscellaneous Layers" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "Reshape Layer" begin
@@ -108,7 +108,7 @@
 end
 
 @testitem "Dense" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "constructors" begin
@@ -171,7 +171,7 @@ end
 end
 
 @testitem "Scale" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "constructors" begin
@@ -236,7 +236,7 @@ end
 end
 
 @testitem "Bilinear" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "SkipConnection recombinator" begin
@@ -336,7 +336,7 @@ end
 end
 
 @testitem "Embedding" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "Linear indices" begin

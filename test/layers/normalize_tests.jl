@@ -1,5 +1,5 @@
 @testitem "BatchNorm" setup=[SharedTestSetup] tags=[:normalize_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, device, ongpu) in MODES
         m = BatchNorm(2)
@@ -105,7 +105,7 @@
 end
 
 @testitem "GroupNorm" setup=[SharedTestSetup] tags=[:normalize_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, device, ongpu) in MODES
         squeeze(x) = dropdims(x; dims=tuple(findall(size(x) .== 1)...)) # To remove all singular dimensions
@@ -189,7 +189,7 @@ end
 end
 
 @testitem "WeightNorm" setup=[SharedTestSetup] tags=[:normalize_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, device, ongpu) in MODES
         @testset "Utils.norm_except" begin
@@ -308,7 +308,7 @@ end
 end
 
 @testitem "LayerNorm" setup=[SharedTestSetup] tags=[:normalize_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, device, ongpu) in MODES
         x = randn(rng, Float32, 3, 3, 3, 2) |> aType
@@ -361,13 +361,14 @@ end
 end
 
 @testitem "InstanceNorm" setup=[SharedTestSetup] tags=[:normalize_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, device, ongpu) in MODES
         for x in (randn(rng, Float32, 3, 3, 3, 2), randn(rng, Float32, 3, 3, 2),
             randn(rng, Float32, 3, 3, 3, 3, 2))
             x = x |> aType
             for affine in (true, false), track_stats in (true, false)
+
                 layer = InstanceNorm(3; affine, track_stats)
                 display(layer)
                 ps, st = Lux.setup(rng, layer) |> device
