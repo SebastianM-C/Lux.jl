@@ -1,7 +1,7 @@
 name = "MLDataDevices"
 uuid = "7e8f7934-dd98-4c1a-8fe8-92b47a384d40"
-authors = ["Avik Pal <avikpal@mit.edu> and contributors"]
 version = "1.6.8"
+authors = ["Avik Pal <avikpal@mit.edu> and contributors"]
 
 [deps]
 Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
@@ -67,7 +67,7 @@ OneHotArrays = "0.2.5"
 Preferences = "1.4"
 Random = "1.10"
 Reactant = "0.2.13"
-RecursiveArrayTools = "3.8"
+RecursiveArrayTools = "3.8, 4"
 ReverseDiff = "1.15"
 SparseArrays = "1.10"
 Tracker = "0.2.36"
