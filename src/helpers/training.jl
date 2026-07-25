@@ -350,7 +350,7 @@ end
 
 @compat(public,
     (TrainState, apply_gradients, apply_gradients!,
-        compute_gradients, single_train_step, single_train_step!))
+    compute_gradients, single_train_step, single_train_step!))
 
 export AutoEnzyme, AutoReverseDiff, AutoTracker, AutoZygote
 

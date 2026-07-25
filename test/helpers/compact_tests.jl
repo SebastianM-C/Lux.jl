@@ -1,18 +1,18 @@
 @testitem "@compact" setup=[SharedTestSetup] tags=[:misc] begin
     using ComponentArrays, Zygote
 
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     function similar_strings(s₁::String, s₂::String)
-        if s₁ != s₂
+        if s₁!=s₂
             println(stderr, "s₁: ", s₁)
             println(stderr, "s₂: ", s₂)
         end
-        return s₁ == s₂
+        return s₁==s₂
     end
 
     function get_model_string(model)
-        io = IOBuffer()
+        io=IOBuffer()
         show(io, MIME"text/plain"(), model)
         return String(take!(io))
     end
@@ -235,7 +235,8 @@
         end
 
         @testset "Hierarchy with Inner Model Named" begin
-            model = @compact(w1=@compact(w1=randn(32, 32), name="Model(32)") do x
+            model = @compact(
+                w1=@compact(w1=randn(32, 32), name="Model(32)") do x
                     @return w1 * x
                 end, w2=randn(32, 32), w3=randn(32),) do x
                 @return w2 * w1(x)
@@ -252,7 +253,8 @@
         end
 
         @testset "Hierarchy with Outer Model Named" begin
-            model = @compact(w1=@compact(w1=randn(32, 32)) do x
+            model = @compact(
+                w1=@compact(w1=randn(32, 32)) do x
                     @return w1 * x
                 end, w2=randn(32, 32), w3=randn(32), name="Model(32)") do x
                 @return w2 * w1(x)
@@ -453,7 +455,8 @@ end
     @test_throws Lux.LuxCompactModelParsingException("expects an anonymous function") @macroexpand @compact(;
         a=1)
 
-    @test_throws Lux.LuxCompactModelParsingException("expects only keyword arguments") @macroexpand @compact(2;
+    @test_throws Lux.LuxCompactModelParsingException("expects only keyword arguments") @macroexpand @compact(
+        2;
         a=1) do x
         @return x + a
     end

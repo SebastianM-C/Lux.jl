@@ -1,9 +1,9 @@
 @testitem "FromFluxAdaptor" setup=[SharedTestSetup] tags=[:misc] begin
     import Flux
 
-    toluxpsst = FromFluxAdaptor(; preserve_ps_st=true)
-    tolux = FromFluxAdaptor()
-    toluxforce = FromFluxAdaptor(; force_preserve=true, preserve_ps_st=true)
+    toluxpsst=FromFluxAdaptor(; preserve_ps_st=true)
+    tolux=FromFluxAdaptor()
+    toluxforce=FromFluxAdaptor(; force_preserve=true, preserve_ps_st=true)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "Containers" begin

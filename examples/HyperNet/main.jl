@@ -101,6 +101,7 @@ function train()
     ### Lets train the model
     nepochs = 50
     for epoch in 1:nepochs, data_idx in 1:2
+
         train_dataloader, test_dataloader = dataloaders[data_idx] .|> dev
 
         stime = time()

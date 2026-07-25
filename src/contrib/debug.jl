@@ -144,7 +144,7 @@ macro debug_mode(layer, kwargs...)
     return esc(:(
         $(fmap_with_path)(
         (kp, l) -> $(DebugLayer)(
-            l; location=$(KeyPath)($(Meta.quot(layer)), kp), $(kwargs...)),
-        $(layer); exclude=$(layer_map_leaf))
+            l; location=($(KeyPath)($(Meta.quot(layer)), kp)), $(kwargs...)),
+        $(layer); exclude=($(layer_map_leaf)))
     ))
 end

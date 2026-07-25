@@ -1,5 +1,5 @@
 @testitem "Bias Activation" tags=[:misc] setup=[SharedTestSetup] begin
-    rng = StableRNG(1234)
+    rng=StableRNG(1234)
 
     bias_act_loss1(act, x, b) = sum(abs2, act.(x .+ LuxLib.Impl.reshape_bias(x, b)))
     bias_act_loss2(act, x, b) = sum(abs2, bias_activation(act, x, b))
@@ -17,7 +17,6 @@
                 logsigmoid, gelu, swish, lisht, tanh, tanh_fast],
             T in [Float32, Float64],
             sz in [(2, 2, 3, 4), (4, 5)]
-
             !fp64 && T == Float64 && continue
 
             x = rand(rng, T, sz) |> aType
@@ -71,20 +70,20 @@ end
 @testitem "Bias Activation (ReverseDiff)" tags=[:misc] setup=[SharedTestSetup] begin
     using ReverseDiff, Tracker
 
-    x = rand(Float32, 3, 4)
-    b = rand(Float32, 3)
-    act = tanh
+    x=rand(Float32, 3, 4)
+    b=rand(Float32, 3)
+    act=tanh
 
-    z = bias_activation(act, ReverseDiff.track(x), b)
+    z=bias_activation(act, ReverseDiff.track(x), b)
     @test z isa ReverseDiff.TrackedArray  # If this fails then we fail to compile the tape
 
-    z = bias_activation(identity, ReverseDiff.track(x), b)
+    z=bias_activation(identity, ReverseDiff.track(x), b)
     @test z isa ReverseDiff.TrackedArray
 
-    z = bias_activation(act, Tracker.param(x), b)
+    z=bias_activation(act, Tracker.param(x), b)
     @test z isa Tracker.TrackedArray
 
-    z = bias_activation(identity, Tracker.param(x), b)
+    z=bias_activation(identity, Tracker.param(x), b)
     @test z isa Tracker.TrackedArray
 end
 

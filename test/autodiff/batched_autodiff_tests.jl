@@ -1,7 +1,7 @@
 @testitem "Batched Jacobian" setup=[SharedTestSetup] tags=[:autodiff] begin
     using ComponentArrays, ForwardDiff, Zygote
 
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         models = (
@@ -41,6 +41,7 @@
 
         @testset "Issue #636 Chunksize Specialization" begin
             for N in (2, 4, 8, 11, 12, 50, 51), backend in (AutoZygote(), AutoForwardDiff())
+
                 model = @compact(; potential=Dense(N => N, gelu), backend=backend) do x
                     @return allow_unstable() do
                         batched_jacobian(potential, backend, x)
@@ -90,7 +91,7 @@ end
 @testitem "Nested AD: Batched Jacobian" setup=[SharedTestSetup] tags=[:autodiff] begin
     using ComponentArrays, ForwardDiff, Zygote
 
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         models = (
@@ -100,6 +101,7 @@ end
         Xs = (aType(randn(rng, Float32, 3, 3, 2, 4)), aType(randn(rng, Float32, 2, 4)))
 
         for (model, X) in zip(models, Xs), backend in (AutoZygote(), AutoForwardDiff())
+
             model = maybe_rewrite_to_crosscor(mode, model)
             ps, st = Lux.setup(rng, model) |> dev
 
@@ -149,7 +151,7 @@ end
 @testitem "Nested AD: Batched Jacobian Single Input" setup=[SharedTestSetup] tags=[:autodiff] begin
     using Zygote, Tracker, ReverseDiff
 
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
     sq_fn(x) = x .^ 2
 
     sumabs2_fd(x) = sum(abs2, batched_jacobian(sq_fn, AutoForwardDiff(), x))

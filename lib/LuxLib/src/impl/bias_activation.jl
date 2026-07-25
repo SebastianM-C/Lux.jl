@@ -211,6 +211,7 @@ function bias_activation_simd_loop!(y::AbstractArray{yT, 3}, σ::F, x::AbstractA
         end
     else
         for K in axes(x, 3), J in axes(x, 2)
+
             @simd ivdep for I in axes(x, 1)
                 @inbounds y[I, J, K] = σ(x[I, J, K] + bias[J])
             end
@@ -242,6 +243,7 @@ function bias_add_loop!(y::AbstractArray{yT, 3}, x::AbstractArray{xT, 3},
         end
     else
         for K in axes(x, 3), J in axes(x, 2)
+
             @simd ivdep for I in axes(y, 1)
                 @inbounds y[I, J, K] = x[I, J, K] + bias[J]
             end

@@ -21,12 +21,11 @@ export loss_loop, loss_loop_no_carry
 end
 
 @testitem "RNNCell" setup=[SharedTestSetup, RecurrentLayersSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset for act in (identity, tanh), use_bias in (true, false),
             train_state in (true, false)
-
             rnncell = RNNCell(3 => 5, act; use_bias, train_state)
             display(rnncell)
             ps, st = Lux.setup(rng, rnncell) |> dev
@@ -75,7 +74,7 @@ end
 end
 
 @testitem "LSTMCell" setup=[SharedTestSetup, RecurrentLayersSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset for use_bias in (true, false)
@@ -178,7 +177,7 @@ end
 end
 
 @testitem "GRUCell" setup=[SharedTestSetup, RecurrentLayersSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset for use_bias in (true, false)
@@ -241,12 +240,11 @@ end
 end
 
 @testitem "StatefulRecurrentCell" setup=[SharedTestSetup, RecurrentLayersSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset for _cell in (RNNCell, LSTMCell, GRUCell), use_bias in (true, false),
             train_state in (true, false)
-
             cell = _cell(3 => 5; use_bias, train_state)
             rnn = StatefulRecurrentCell(cell)
             display(rnn)
@@ -404,7 +402,7 @@ end
 end
 
 @testitem "Recurrence Ordering Check #302" setup=[SharedTestSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         encoder = Recurrence(
             RNNCell(1 => 1, identity;
@@ -421,7 +419,7 @@ end
 end
 
 @testitem "Bidirectional" setup=[SharedTestSetup, RecurrentLayersSetup] tags=[:recurrent_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "cell: $_cell" for _cell in (RNNCell, LSTMCell, GRUCell)

@@ -207,6 +207,7 @@ Currently supported modes are:
   - `GPUBroadcastOp{dev}`: GPU Arrays where `dev` is obtained from `get_device_type(xs)`.
     This option dispatches should preferably use `KernelAbstractions` or specialized vendor
     dispatches.
+
   - `LoopedArrayOp`: CPU arrays that can be optimized using SIMD Loops, ideally using
     `LoopVectorization.jl` or `Polyester.jl`.
 """

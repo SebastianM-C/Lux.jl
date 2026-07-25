@@ -50,6 +50,7 @@ leaves.
 
   - `@init_fn`: Provide a function that will be used to initialize the layer's parameters or
     state. See the docs of [`@init_fn`](@ref) for more details.
+
   - `@non_trainable`: Mark a value as non-trainable. This bypasses the regular checks and
     places the value into the state of the layer. See the docs of [`@non_trainable`](@ref)
     for more details.
@@ -185,7 +186,7 @@ You may also specify a `name` for the model, which will be used instead of the d
 printout, which gives a verbatim representation of the code used to construct the model:
 
 ```jldoctest
-julia> model = @compact(w=rand(3), name="Linear(3 => 1)") do x
+julia> model = @compact(w=rand(3), name=\"Linear(3 => 1)\") do x
            @return sum(w .* x)
        end
 Linear(3 => 1)      # 3 parameters
@@ -318,8 +319,8 @@ function initialstates(rng::AbstractRNG, m::CompactLuxLayer)
         base_states,
         (;
             ₋₋₋kwargs₋₋₋=CompactMacroImpl.KwargsStorage(
-                NamedTuple{m.stored_kwargs[1]}(m.stored_kwargs[2])
-            )
+            NamedTuple{m.stored_kwargs[1]}(m.stored_kwargs[2])
+        )
         )
     )
 end
