@@ -1,7 +1,7 @@
 @testitem "Activation Functions" tags=[:misc] setup=[SharedTestSetup] begin
     using Enzyme
 
-    rng = StableRNG(1234)
+    rng=StableRNG(1234)
 
     apply_act(f::F, x) where {F} = sum(abs2, f.(x))
     apply_act_fast(f::F, x) where {F} = sum(abs2, fast_activation!!(f, copy(x)))

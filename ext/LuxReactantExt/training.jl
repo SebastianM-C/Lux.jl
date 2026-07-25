@@ -118,7 +118,8 @@ for inplace in ("!", "")
 
     @eval function Lux.Training.$(fname)(backend::ReactantBackend, obj_fn::F, data,
             ts::Training.TrainState{<:TrainingBackendCache{<:ReactantBackend}, F}) where {F}
-        grads, ps, loss, stats, st, opt_state = ts.cache.extras.compiled_grad_and_step_function(
+        grads, ps, loss, stats, st,
+        opt_state = ts.cache.extras.compiled_grad_and_step_function(
             obj_fn, ts.model, data, ts.parameters, ts.states,
             ts.optimizer_state, backend.return_gradients)
 

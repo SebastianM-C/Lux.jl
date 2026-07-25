@@ -28,7 +28,7 @@ end
     using Reactant, Lux
     using LuxTestUtils: check_approx
 
-    rng = StableRNG(123)
+    rng=StableRNG(123)
 
     @testset "$(mode)" for (mode, atype, dev, ongpu) in MODES
         if mode == "amdgpu"
@@ -120,7 +120,6 @@ end
 
         @testset for track_stats in (true, false), affine in (true, false),
             act in (identity, tanh)
-
             model = Chain(
                 Dense(2 => 3, tanh),
                 BatchNorm(3, act; track_stats, affine, init_bias=rand32, init_scale=rand32),

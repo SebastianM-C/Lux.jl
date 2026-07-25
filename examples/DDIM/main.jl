@@ -224,6 +224,7 @@ function generate_and_save_image_grid(output_dir, imgs::Vector{<:AbstractArray{<
     fig = Figure()
     nrows, ncols = 3, 4
     for r in 1:nrows, c in 1:ncols
+
         i = (r - 1) * ncols + c
         i > length(imgs) && break
         ax = Axis(fig[r, c]; aspect=DataAspect())

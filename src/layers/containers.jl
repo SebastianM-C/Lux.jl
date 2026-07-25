@@ -437,7 +437,7 @@ Chain(
 )         # Total: 23 parameters,
           #        plus 7 states.
 
-julia> Chain(Dense(2, 3, relu), BatchNorm(3), Dense(3, 2); name="MyFancyChain")
+julia> Chain(Dense(2, 3, relu), BatchNorm(3), Dense(3, 2); name=\"MyFancyChain\")
 MyFancyChain(
     layer_1 = Dense(2 => 3, relu),      # 9 parameters
     layer_2 = BatchNorm(3, affine=true, track_stats=true),  # 6 parameters, plus 7

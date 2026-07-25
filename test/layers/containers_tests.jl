@@ -1,6 +1,6 @@
 
 @testitem "SkipConnection" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "zero sum" begin
@@ -30,7 +30,7 @@
 end
 
 @testitem "Parallel" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "zero sum" begin
@@ -146,7 +146,7 @@ end
 end
 
 @testitem "PairwiseFusion" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         x = (rand(Float32, 1, 10), rand(Float32, 30, 10), rand(Float32, 10, 10)) .|> aType
@@ -193,7 +193,7 @@ end
 end
 
 @testitem "BranchLayer" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         layer = BranchLayer(Dense(10, 10), Dense(10, 10))
@@ -225,7 +225,7 @@ end
 end
 
 @testitem "Chain" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         layer = Chain(Dense(10 => 5, sigmoid), Dense(5 => 2, tanh), Dense(2 => 1))
@@ -323,7 +323,7 @@ end
 end
 
 @testitem "Maxout" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "constructor" begin
@@ -384,7 +384,7 @@ end
 end
 
 @testitem "Repeated" setup=[SharedTestSetup] tags=[:core_layers] begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         LAYERS = [Dense(2 => 2), Parallel(+, Dense(2 => 2), Dense(2 => 2)),
@@ -409,18 +409,18 @@ end
 @testitem "Coupling Type Instability: #416" setup=[SharedTestSetup] tags=[:core_layers] begin
     using ComponentArrays, Random
 
-    rng = Random.default_rng()
+    rng=Random.default_rng()
 
-    froggie = Chain(
+    froggie=Chain(
         BranchLayer(NoOpLayer(), NoOpLayer()),
         Parallel(
             nothing,
             Parallel(
                 +,
-                Dense(1 => 1),
+                Dense(1=>1),
                 NoOpLayer()
             ),
-            Dense(1 => 1)
+            Dense(1=>1)
         )
     )
 

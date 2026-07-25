@@ -17,6 +17,7 @@ for serial in (true, false)
             C::AbstractMatrix, A::AbstractMatrix, B::AbstractMatrix, α::Number, β::Number)
         if !iszero(β) # Special case this because Base.FastMath.mul_fast(NaN, false) = NaN
             @turbo thread=$(!serial) for K in indices((C, B), 2), J in indices((C, A), 1)
+
                 Cⱼₖ = zero(eltype(C))
                 for I in indices((A, B), (2, 1))
                     Cⱼₖ += A[J, I] * B[I, K]
@@ -25,6 +26,7 @@ for serial in (true, false)
             end
         else
             @turbo thread=$(!serial) for K in indices((C, B), 2), J in indices((C, A), 1)
+
                 Cⱼₖ = zero(eltype(C))
                 for I in indices((A, B), (2, 1))
                     Cⱼₖ += A[J, I] * B[I, K]
@@ -38,6 +40,7 @@ end
 @inline function LuxLib.Impl.matmuladd_loopvec!(
         C::AbstractMatrix, A::AbstractMatrix, B::AbstractMatrix, bias::AbstractVector)
     @tturbo for K in indices((C, B), 2), J in indices((C, A), 1)
+
         Cⱼₖ = zero(eltype(C))
         for I in indices((A, B), (2, 1))
             Cⱼₖ += A[J, I] * B[I, K]

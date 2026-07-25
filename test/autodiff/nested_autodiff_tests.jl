@@ -251,7 +251,7 @@ end
 end
 
 @testitem "Nested AD: Structured Matrix LuxDL/Lux.jl#602" setup=[SharedTestSetup] tags=[:autodiff] begin
-    rng = StableRNG(1234)
+    rng=StableRNG(1234)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         @testset "Structured Matrix: Issue LuxDL/Lux.jl#602" begin
@@ -276,7 +276,7 @@ end
 end
 
 @testitem "Nested AD: VJP & JVP" setup=[SharedTestSetup] tags=[:autodiff] begin
-    rng = StableRNG(1234)
+    rng=StableRNG(1234)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         models = (
@@ -350,7 +350,7 @@ end
 @testitem "VJP/JVP Interface Test" setup=[SharedTestSetup] tags=[:autodiff] begin
     using Functors, ADTypes
 
-    rng = StableRNG(1234)
+    rng=StableRNG(1234)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         x = rand(rng, 3, 3) |> aType
@@ -384,28 +384,28 @@ end
         return functorABC(st.functor.a .* st.functor.b, st.tup[1] .* st.tup[2])
     end
 
-    nt = (functor=functorABC(rand(rng, 3), rand(rng, 3)), tup=(rand(rng, 3), rand(rng, 3)))
-    u = (functor=functorABC(rand(rng, 3), rand(rng, 3)), tup=(rand(rng, 3), rand(rng, 3)))
+    nt=(functor=functorABC(rand(rng, 3), rand(rng, 3)), tup=(rand(rng, 3), rand(rng, 3)))
+    u=(functor=functorABC(rand(rng, 3), rand(rng, 3)), tup=(rand(rng, 3), rand(rng, 3)))
 
     @test jacobian_vector_product(ftest, AutoForwardDiff(), nt, u) isa Any
 end
 
 @testitem "Nested AD: Issue #743 (eval + gradient)" setup=[SharedTestSetup] tags=[:autodiff] begin
     function loss_function(model, ps, st, x)
-        smodel = StatefulLuxLayer{true}(model, ps, st)
-        y_pred = smodel(x)
-        dy_pred = only(Zygote.gradient(sum ∘ smodel, x))
-        loss = sum(dy_pred .+ y_pred .^ 2 / 2)
+        smodel=StatefulLuxLayer{true}(model, ps, st)
+        y_pred=smodel(x)
+        dy_pred=only(Zygote.gradient(sum∘smodel, x))
+        loss=sum(dy_pred .+ y_pred .^ 2/2)
         return loss
     end
 
-    rng = StableRNG(1234)
-    model = Chain(Dense(1 => 8, sigmoid), Dense(8 => 1))
-    ps, st = Lux.setup(rng, model)
-    x = randn(rng, Float32, 1, 12)
+    rng=StableRNG(1234)
+    model=Chain(Dense(1=>8, sigmoid), Dense(8=>1))
+    ps, st=Lux.setup(rng, model)
+    x=randn(rng, Float32, 1, 12)
 
-    __f = let model = model, st = st
-        (x, ps) -> loss_function(model, ps, st, x)
+    __f=let model=model, st=st
+        (x, ps)->loss_function(model, ps, st, x)
     end
 
     @test_gradients(__f, x, ps; atol=1.0f-3,

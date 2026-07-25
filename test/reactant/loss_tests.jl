@@ -1,7 +1,7 @@
 @testitem "Compiled Loss Functions" tags=[:reactant] setup=[SharedTestSetup] skip=:(Sys.iswindows()) begin
     using Reactant, Lux, OneHotArrays
 
-    rng = StableRNG(123)
+    rng=StableRNG(123)
 
     @testset "$(mode)" for (mode, atype, dev, ongpu) in MODES
         if mode == "amdgpu"

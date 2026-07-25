@@ -6,6 +6,7 @@ for cfg in (:JacobianConfig, :GradientConfig)
 end
 
 for fType in AD_CONVERTIBLE_FUNCTIONS, type in (:Gradient, :Jacobian)
+
     cfgname = Symbol(type, :Config)
     fname = Symbol(lowercase(string(type)))
     internal_fname = Symbol(:forwarddiff_, fname)

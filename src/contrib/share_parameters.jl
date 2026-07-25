@@ -38,7 +38,7 @@ Chain(
 julia> ps, st = Lux.setup(Xoshiro(0), model);
 
 julia> # share parameters of (d1 and d3.l1) and (d3.l2 and d2)
-       ps = Lux.Experimental.share_parameters(ps, (("d3.l2", "d1"), ("d2", "d3.l1")));
+       ps = Lux.Experimental.share_parameters(ps, ((\"d3.l2\", \"d1\"), (\"d2\", \"d3.l1\")));
 
 julia> ps.d3.l2.weight === ps.d1.weight &&
            ps.d3.l2.bias === ps.d1.bias &&
@@ -67,6 +67,7 @@ end
 
 function unsafe_share_parameters(ps, new_ps, lens)
     for (new_ps, lens_group) in zip(new_ps, lens), cur_lens in lens_group
+
         ps = _safe_update_parameter(ps, cur_lens, new_ps)
     end
     return ps
@@ -84,6 +85,7 @@ end
 
 function assert_disjoint_sharing_list(sharing)
     for i in eachindex(sharing), j in (i + 1):length(sharing)
+
         if !isdisjoint(sharing[i], sharing[j])
             throw(AssertionError("sharing[$i] ($(sharing[i])) and sharing[$j] \
                                   ($(sharing[j])) must be disjoint"))

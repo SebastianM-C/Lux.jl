@@ -84,12 +84,13 @@ end
 
 @testitem "Enzyme Integration" setup=[EnzymeTestSetup, SharedTestSetup] tags=[
     :autodiff, :enzyme] timeout=3600 begin
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         ongpu && continue
 
-        @testset "[$(i)] $(nameof(typeof(model)))" for (i, (model, x)) in enumerate(MODELS_LIST)
+        @testset "[$(i)] $(nameof(typeof(model)))" for (i, (
+            model, x)) in enumerate(MODELS_LIST)
             display(model)
 
             ps, st = Lux.setup(rng, model) |> dev
@@ -108,12 +109,13 @@ end
     :autodiff, :enzyme] begin
     using ComponentArrays
 
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         ongpu && continue
 
-        @testset "[$(i)] $(nameof(typeof(model)))" for (i, (model, x)) in enumerate(MODELS_LIST)
+        @testset "[$(i)] $(nameof(typeof(model)))" for (i, (
+            model, x)) in enumerate(MODELS_LIST)
             display(model)
 
             ps, st = Lux.setup(rng, model)

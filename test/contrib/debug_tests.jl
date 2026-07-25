@@ -1,7 +1,7 @@
 @testitem "Debugging Tools: DimensionMismatch" setup=[SharedTestSetup] tags=[:misc] begin
     using Logging
 
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     @testset "$mode" for (mode, aType, dev, ongpu) in MODES
         model = Chain(
@@ -56,14 +56,14 @@ end
     using Logging, ChainRulesCore
     import ChainRulesCore as CRC
 
-    rng = StableRNG(12345)
+    rng=StableRNG(12345)
 
     offending_layer(x) = 2 .* x
 
     function CRC.rrule(::typeof(offending_layer), x)
-        y = offending_layer(x)
+        y=offending_layer(x)
         function ∇offending_layer(Δ)
-            Δ[1:1] .= NaN
+            Δ[1:1].=NaN
             return NoTangent(), Δ
         end
         return y, ∇offending_layer
@@ -153,14 +153,14 @@ end
 end
 
 @testitem "Debugging Tools: Issue #1068" setup=[SharedTestSetup] tags=[:misc] begin
-    model = Chain(
-        Conv((3, 3), 3 => 16, relu; stride=2),
+    model=Chain(
+        Conv((3, 3), 3=>16, relu; stride=2),
         MaxPool((2, 2)),
         AdaptiveMaxPool((2, 2)),
         GlobalMaxPool()
     )
 
-    model_debug = Lux.Experimental.@debug_mode model
+    model_debug=Lux.Experimental.@debug_mode model
     display(model_debug)
 
     @test model_debug[1] isa Lux.Experimental.DebugLayer

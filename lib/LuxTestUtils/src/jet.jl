@@ -38,7 +38,7 @@ All additional arguments will be forwarded to `JET.@test_call` and `JET.@test_op
     ```julia
     using LuxTestUtils
 
-    jet_target_modules!(["Lux", "LuxLib"]) # Expects Lux and LuxLib to be present in the module calling `@jet`
+    jet_target_modules!([\"Lux\", \"LuxLib\"]) # Expects Lux and LuxLib to be present in the module calling `@jet`
     ```
 
 ## Example
